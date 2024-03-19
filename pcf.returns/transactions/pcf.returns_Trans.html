@@ -1,0 +1,96 @@
+<div class="mb-2">
+    <div class="mb-2">
+        <form ng-submit="" class="d-flex mt-3">
+            <div class="col-1 form-group ">
+                <label class="form-label text-muted mb-1">Branch</label>
+            
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-primary text-dark me-2">{{ Blk }}</span>
+                    
+                    <!-- <select class="form-select" select2 ng-model="filter.BrCode" ng-change="onBranchChange()"
+                            ng-disabled="loading" name="branch">
+                        <option value="All">ALL</option>
+                        <option ng-repeat="branch in branches" value="{{branch.Code}}">{{branch.Code}} - {{branch.Blk}}</option>
+                    </select> -->
+                </div>
+            </div>
+            
+            <div class="form-group mb-1 me-2">
+                <label class="text-muted small mb-0">From</label>
+                <input ng-disabled="loading" ng-model="filter.SDate" type="date" 
+                    class="form-control form-control-sm" required />
+            </div>
+            <div class="form-group mb-1 me-2">
+                <label class="text-muted small mb-0">To</label>
+                <input ng-disabled="loading" ng-model="filter.EDate" type="date"
+                    class="form-control form-control-sm" required />
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between mb-3 mt-4">
+                <button type="submit" ng-click='getReturns()' class="btn btn-primary btn-sm mt-auto mb-1 me-2" ng-disabled="loading">
+                    <span ng-hide="loading"><i class="bi bi-arrow-clockwise"></i> LOAD</span>
+                    <span ng-show="loading"><span class="spinner-border spinner-border-sm"></span> Loading..</span>
+                </button>
+
+                <button type="button" ng-click="export()" class="btn btn-outline-success btn-sm mt-auto mb-1 me-2"
+                    ng-disabled="loading">
+                    <span><i class="bi bi-file-earmark-excel"></i> EXPORT</span>
+                </button>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex">
+        <input type="text" class="form-control form-control-sm mt-auto mb-2 w-25 ms-auto" placeholder="Quick search.."
+            ng-model="searchkey" ng-change="search(searchkey)" ng-disabled="loading">
+    </div>
+    <div id="gridOptionsReturns" class="ag-theme-balham mb-2" style="height: 350px;"></div>
+
+    <div class="d-flex">
+        <p class="me-4">Result: <b>{{totalRows}}</b></p>
+        <button type="button" class="btn btn-danger ms-auto btn-sm mt-auto mt-auto" ng-if="transactions.length > 0"
+            ng-click="cancelRequest()" ng-disabled="loading">Cancel</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateReturnsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form ng-submit="post()">
+                    <div class="modal-body">
+                        <div class="d-flex mb-0">
+                            <h5 class="mb-0">Return Amount</h5>
+                            <p class="badge bg-primary text-dark ms-2 mb-0 my-auto">{{ request.Blk }}</p>
+                            <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close" ng-click="resetRequest()"></button>
+                        </div>
+                        <div class="mb-4 pb-1"><small class="fst-italic">Fields with (<span class="text-danger">*</span>) are required.</small></div>
+                        <div class="row pe-3">
+                            
+                            <div class="form-group mb-2 me-0 col-xl-3 col-lg-4 col-md-6 col-sm-12 pe-0">
+                                <label class="small mb-0">Return Amount <span class="text-danger">*</span></label>
+                                <input id="returnAmtInput" ng-model="inputReturnAmt" ng-disabled="loading" type="number" step=".01" min="0" name="ReturnAmt" class="form-control form-control-sm text-end" required oninput="validity.valid||(value='');" />
+                            </div>
+                              
+                            <div class="form-group mb-2 me-0 col-xl-3 col-lg-4 col-md-6 col-sm-12 pe-0">
+                                <label class="small mb-0">Remarks <span class="text-danger">*</span></label>
+                                <input id="remarksInput" ng-disabled="loading"  type="text" name="Remarks" class="form-control form-control-sm" placeholder="Please Input Remarks in here"/>
+                            </div>
+
+                            <div id="gridOptionsReturnsDetails" class="ag-theme-balham mb-2" style="height: 250px;"></div>
+                           
+                            <div class="d-flex">
+                                <p class="me-4">Result: <b>{{totalRowsDetails}}</b></p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-disabled="loading" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" ng-click="returnAmt()">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

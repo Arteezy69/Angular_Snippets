@@ -1,0 +1,9 @@
+<div class="dropdown">
+    <select class="form-select" ng-model="selectedBranch"
+        ng-options="branch.BrCode as branch.BrCode + ' - ' + branch.Blk for branch in BRdata"
+        ng-change="onBranchSelected(selectedBranch)"
+        aria-label="Default select example">
+        <option selected>Open this select menu</option>
+
+    </select>
+</div>
